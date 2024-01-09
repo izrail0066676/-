@@ -1,4 +1,4 @@
-function calculator(inputString) {
+function calculator(String) {
     function validateOperand(operand) {
         if (!(1 <= operand && operand <= 10)) {
             throw new Error("Операнды должны быть в диапазоне от 1 до 10 включительно");
