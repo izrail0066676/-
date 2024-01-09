@@ -1,0 +1,66 @@
+function calculator(inputString) {
+    function validateOperand(operand) {
+        if (!(1 <= operand && operand <= 10)) {
+            throw new Error("Операнды должны быть в диапазоне от 1 до 10 включительно");
+        }
+    }
+
+    function validateOperator(operator) {
+        if (!['+', '-', '*', '/'].includes(operator)) {
+            throw new Error("Неподдерживаемая операция. Поддерживаются только +, -, *, /");
+        }
+    }
+
+    function isArabic(numeral) {
+        return !isNaN(numeral);
+    }
+
+    function isRoman(numeral) {
+        return isNaN(numeral);
+    }
+
+    function romanToInt(romanNumeral) {
+        const romanNumerals = { I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10 };
+        return romanNumerals[romanNumeral] || 0;
+    }
+
+    function intToRoman(number) {
+        const arabicNumerals = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X' };
+        return arabicNumerals[number] || "";
+    }
+
+    function performOperation(operand1, operand2, operator) {
+        operand1 = isArabic(operand1) ? parseInt(operand1) : romanToInt(operand1);
+        operand2 = isArabic(operand2) ? parseInt(operand2) : romanToInt(operand2);
+
+        if (operator === '+') {
+            return operand1 + operand2;
+        } else if (operator === '-') {
+            return operand1 - operand2;
+        } else if (operator === '*') {
+            return operand1 * operand2;
+        } else if (operator === '/') {
+            return Math.floor(operand1 / operand2);  // Возвращаем только целую часть
+        }
+    }
+
+    try {
+        const [operand1, operator, operand2] = inputString.split(' ');
+
+        validateOperand(operand1);
+        validateOperand(operand2);
+        validateOperator(operator);
+
+        if ((isRoman(operand1) && isArabic(operand2)) || (isArabic(operand1) && isRoman(operand2))) {
+            throw new Error("Операнды должны быть либо арабскими, либо римскими");
+        }
+
+        const result = performOperation(operand1, operand2, operator);
+
+        return isArabic(operand1) && isArabic(operand2) ? result.toString() : intToRoman(result);
+    } catch (error) {
+        throw error;
+    }
+}
+
+module.exports = calculator;
