@@ -52,7 +52,7 @@ function calculator(String) {
         validateOperator(operator);
 
         if ((isRoman(operand1) && isArabic(operand2)) || (isArabic(operand1) && isRoman(operand2))) {
-            throw new Error("Операнды должны быть либо арабскими, либо римскими");
+            throw new Error("Операнды должны быть либо оба арабскими, либо оба римскими");
         }
 
         const result = performOperation(operand1, operand2, operator);
